@@ -1,0 +1,93 @@
+Quick-Cocos2dx-Community v3.6.3 release
+
+[更新]	Spine runtime更新以支持Spine 3.4编辑器导出的新Json格式。
+[更新]	OpenSSL更新到1.0.2g，以满足 google play 审核。
+[更新]	更新网络库，以支持ipv6 （iOS App Store 审核需求）
+[更新]	SocketTCP 加入ipv6网络检查（服务器地址必需域名方式）。
+
+[新增]	Spine 新增绑定接口 http://www.tairan.com/archives/11277/
+
+[修正]	Luajit log buffer size恢复到512，解决log信息不全。
+[修正]	UISilder bugfix：在onSliderPressed中调用SilderValue不能正确更新滑块位置。
+[修正]	assert-manager json解析错误与curl下载错误修正。
+[修正]	修正Cocos2dConstants.lua中cc.LANGUAGE_xxx 系列常量错误
+
+Quick-Cocos2dx-Community v3.6.2 release
+
+[新增]	Spine 新增加lua绑定接口: http://www.tairan.com/archives/11166/
+[新增]	新增加 Quick 热更新 demo。
+[新增]	network.createHTTPRequest 新增put和delete方法支持。
+
+[更新]	更新LuaJIT 2.1.0-beta2
+[更新]	cc/uiloader/CCSUILoader2 改进
+[更新]	Android NDK 支持更新到 r10e。
+
+Quick-Cocos2dx-Community v3.6.1 release
+
+[更新]	Android 库全部用NDK r10d编译并更新，3.6.1 推荐使用 NDK r10d 进行项目编译。
+[更新]	Chipmunk升级到 6.2.2
+[更新]	curl升级到7.40.0
+[更新]	freetype升级到2.5.5
+[更新]	jpeg升级到v9
+[更新]	tiff升级到4.0.3
+[更新]	web升级到 0.4.4
+[更新]	libwebsockets升级到 1.3-chrome37-firefox30
+[更新]	rapidjson升级到 dee230b。
+
+[修正]	cc.pIsSegmentIntersect 判断修正
+[修正]	创建项目的php脚本去掉_ENV依赖，解决Mac用户用brew升级php后导致创建项目失败的bug。
+[修正]	Android与win32 现在能正确处理加密的资源文件。
+[修正]	ccui.Helper:seekWidgetByName 与 ccui.Helper:seekWidgetByTag 现在能正常工作。
+[修正]	手动添加 cc.CardinalSplineTo:create 绑定。
+[修正]	Luajit能完整打印log了。
+[修正]	Android 5.0 运行报告 md5_init 错误修正。
+[修正]	CCFileUtils 解析 UTF8＋BOM 字节文件时“key not found”的问题修正。
+[修正]	修正Windows player 部分机器不能保存历史记录的bug。
+
+Quick-Cocos2dx-Community v3.6 release
+
+[修正]	在setup_mac.sh中为player.app添加可执行权限
+[修正]	修复sp.SkeletonData内存泄漏问题
+[修正]	修复TileMap中getTileAt()方法
+
+Quick-Cocos2dx-Community v3.6 beta2,build e0032f7
+
+[新增]	compile_script 加入 bit mode，已支持生成64位的luajit bytecode
+[新增]	新增 encrypt_res 工具，用于资源文件加密
+
+[修正]	修正新增的sample没有预览图片的问题
+[修正]	修正塔防sample存档之后不能启动的bug
+[修正]	修正setup_win.bat中的错误提示
+[修正]	增强setup_mac.sh的异常处理，并更新说明文档
+[修正]	win32 player 打包加入运行库，并能正确显示log
+[修正]	修正 Android 编译ndk时候找不到opengl头文件的错误
+
+[删除]	去掉build_apk脚本（脚本需要Android环境支持，并不能直接运行）
+
+Quick-Cocos2dx-Community v3.6 beta1,build 3b7c215
+
+[更新]	Spine runtime更新到2.3
+[更新]	新增Spine对象绑定sp.SkeletonData，可从sp.SkeletonData创建SkeletonAnimation，以便开发者可用数据缓存提升spine加载速度
+[更新]	更新 Luajit 到 2.1.0-beta1，支持 arm64
+[更新]	创建工程去掉"Copy Sources Files"选项
+[更新]	更新 compile_script，使用 Luajit 来生成 bytecode
+[更新]	更新模版工程，适应 iOS9 变化，默认bitcode改为"NO"
+
+[新增]	CONFIG_SCREEN_AUTOSCALE 新增 EXACT_FIT 选项
+[新增]	新增 cc.FileUtils:getDataFromFile 接口
+[新增]	新增 CocoStudio 2.0 支持
+[新增]	UI控件新增 clone() 接口
+
+[修正]	修正Mac Player不能正确调用cc.FileUtils:getInstance():getStringFromFile的错误
+[修正]	修正 DrawPrimitives.lua 中的拼写错误
+[修正]	修正 EventProtocol.lua中的 bug
+[修正]	修正 clipping rectangle node 缩放 bug
+[修正]	修正 autorelease 内存泄漏
+[修正]	修正 Mac 下显示 FPS 导致崩溃的bug
+[修正]	修正 Node:hitTest 错误
+[修正]	修正 UIScrollView 滚动bug
+[修正]	修正 UIListView 中的内存泄漏
+[修正]	修正 LuaEventNode 中的bug
+
+[删除]	去掉 Windows Phone 支持
+[删除]	去掉 Cocos Code IDE 支持
