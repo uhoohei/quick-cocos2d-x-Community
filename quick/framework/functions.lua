@@ -530,6 +530,8 @@ end
 
 ]]
 function handler(obj, method)
+    assert(obj)
+    assert(method)
     return function(...)
         return method(obj, ...)
     end
@@ -1574,7 +1576,7 @@ function string.urlencode(input)
     -- convert line endings
     input = string.gsub(tostring(input), "\n", "\r\n")
     -- escape all characters but alphanumeric, '.' and '-'
-    input = string.gsub(input, "([^%w%.%- ])", urlencodechar)
+    input = string.gsub(input, "([^%w%.%-%_ ])", urlencodechar)
     -- convert spaces to "+" symbols
     return string.gsub(input, " ", "+")
 end
