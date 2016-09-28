@@ -47,6 +47,7 @@ function SocketTCP:ctor(__host, __port, __retryConnectWhenFailure)
 	self.tcp = nil
 	self.isRetryConnect = __retryConnectWhenFailure
 	self.isConnected = false
+	self.inConnect_ = false
 end
 
 function SocketTCP:setName( __name )
@@ -80,6 +81,10 @@ local function isIpv6(_domain)
 end
 
 function SocketTCP:connect(__host, __port, __retryConnectWhenFailure)
+	if self.inConnect_ then
+		return
+	end
+	self.inConnect_ = true
 	if __host then self.host = __host end
 	if __port then self.port = __port end
 	if __retryConnectWhenFailure ~= nil then self.isRetryConnect = __retryConnectWhenFailure end
@@ -107,6 +112,8 @@ end
 function SocketTCP:close( ... )
 	--printInfo("%s.close", self.name)
 	self.tcp:close();
+	self.inConnect_ = false
+	self.isConnected = false
 	if self.connectTimeTickScheduler then scheduler.unscheduleGlobal(self.connectTimeTickScheduler) end
 	if self.tickScheduler then scheduler.unscheduleGlobal(self.tickScheduler) end
 	self:dispatchEvent({name=SocketTCP.EVENT_CLOSE})
@@ -169,6 +176,7 @@ end
 
 function SocketTCP:_disconnect()
 	self.isConnected = false
+	self.inConnect_ = false
 	self.tcp:shutdown()
 	self:dispatchEvent({name=SocketTCP.EVENT_CLOSED})
 end
@@ -176,6 +184,7 @@ end
 function SocketTCP:_onDisconnect()
 	-- print("%s._onDisConnect", self.name);
 	self.isConnected = false
+	self.inConnect_ = false
 	self:dispatchEvent({name=SocketTCP.EVENT_CLOSED})
 	self:_reconnect();
 end
@@ -184,6 +193,7 @@ end
 function SocketTCP:_onConnected()
 	-- print("%s._onConnectd", self.name)
 	self.isConnected = true
+	self.inConnect_ = false
 	self:dispatchEvent({name=SocketTCP.EVENT_CONNECTED})
 	if self.connectTimeTickScheduler then scheduler.unscheduleGlobal(self.connectTimeTickScheduler) end	
 	-- start to read TCP data
@@ -192,6 +202,8 @@ end
 
 function SocketTCP:_connectFailure(status)
 	-- print("%s._connectFailure", self.name);
+	self.inConnect_ = false
+	self.isConnected = false
 	self:dispatchEvent({name=SocketTCP.EVENT_CONNECT_FAILURE})
 	self:_reconnect();
 end
