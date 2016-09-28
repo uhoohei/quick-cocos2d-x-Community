@@ -47,6 +47,12 @@ function AppBase:createView(viewName, ...)
     return viewClass.new(...)
 end
 
+function AppBase:createController(controllerName, ...)
+    local controllerPackageName = self.packageRoot .. ".controllers." .. controllerName
+    local controllerClass = require(controllerPackageName)
+    return controllerClass.new(...)
+end
+
 function AppBase:onEnterBackground()
     self:dispatchEvent({name = AppBase.APP_ENTER_BACKGROUND_EVENT})
 end
