@@ -210,7 +210,7 @@ function Node:setKeypadEnabled(enable)
         return self
     end
     
-    _enable = self._keyboardEnabled or false
+    local _enable = self._keyboardEnabled or false
     if enable == _enable then
         return self
     end
