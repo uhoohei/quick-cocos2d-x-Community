@@ -220,7 +220,7 @@ function player:registerEventHandler()
     local event = function(e)
         if not json then return end
 
-        data = json.decode(e:getDataString())
+        local data = json.decode(e:getDataString())
         if data.name == "menuClicked" then
             self:onMenuClicked(data)
         end
