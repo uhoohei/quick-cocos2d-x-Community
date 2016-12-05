@@ -11,6 +11,7 @@ if (DS == '/')
 		}else{
 			define('LUAJIT_BIN', BIN_DIR . '/mac/luajit');
 			define('LUAJIT64_BIN', BIN_DIR . '/mac/luajit64');
+            define('LUAC_BIN', BIN_DIR . '/mac/luac');
 		}
 }
 else
@@ -150,7 +151,7 @@ function findFiles($dir, array & $files)
     closedir($dh);
 }
 
-function getScriptFileBytecodes($bit, $path, $tmpfile)
+function getScriptFileBytecodes($bit, $path, $tmpfile, $is_luac)
 {
     if (!file_exists($path))
     {
@@ -169,13 +170,17 @@ function getScriptFileBytecodes($bit, $path, $tmpfile)
 
     @mkdir(pathinfo($tmpfile, PATHINFO_DIRNAME), 0777, true);
 
-	$bin = null;
-	if ($bit == '32') {
-		$bin = LUAJIT_BIN;
-	} else {
-		$bin = LUAJIT64_BIN;
-	}
-	$command = sprintf('%s -b "%s" "%s"', $bin, $path, $tmpfile);
+    if ($is_luac) {
+        $command = sprintf('%s -o "%s" "%s"', LUAC_BIN, $tmpfile, $path); 
+    } else {
+        $bin = null;
+        if ($bit == '32') {
+            $bin = LUAJIT_BIN;
+        } else {
+            $bin = LUAJIT64_BIN;
+        }
+        $command = sprintf('%s -b "%s" "%s"', $bin, $path, $tmpfile);
+    }
     passthru($command);
 
     if (!file_exists($tmpfile))

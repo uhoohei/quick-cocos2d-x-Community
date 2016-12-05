@@ -60,6 +60,12 @@ class ScriptsCompiler
         {
             $this->config['excludes'] = array();
         }
+        if (empty($this->config['luac']))
+        {
+            $this->config['luac'] = false;
+        } else {
+            $this->config['luac'] = boolval($this->config['luac']);
+        }
 
         if ($this->config['compile'] != self::COMPILE_ZIP
             && $this->config['compile'] != self::COMPILE_FILES
@@ -295,7 +301,7 @@ class ScriptsCompiler
         $modulesBytes = array();
         foreach ($modules as $path => $module)
         {
-            $bytes = getScriptFileBytecodes($this->config['bit'], $path, $module['tempFilePath']);
+            $bytes = getScriptFileBytecodes($this->config['bit'], $path, $module['tempFilePath'], $this->config['luac']);
             if ($xxtea)
             {
                 $bytes = $sign . $xxtea->encrypt($bytes);

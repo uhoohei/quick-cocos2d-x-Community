@@ -16,6 +16,7 @@ $options = array(
     array('c',   'config',     1,      null,        'load options from config file'),
     array('q',   'quiet',      0,      false,       'quiet'),
     array('b',   'bit',        1,      '32',        'use 32 bit or 64 bit luajit'),
+    array('lc',  'luac',       1,      false,       'use luac to compile files'),
 );
 
 function errorhelp()
@@ -58,6 +59,7 @@ encrypt mode:
 bit mode:
     -b 32 (default)     use bit 32 luajit to compile bytecode
     -b 64 (Mac Only)    use bit 64 luajit to compile bytecode
+    -lc 0 (default)     use luac when -lc with 1 to compile bytecode
 
 config file format:
 
