@@ -670,7 +670,9 @@ static int lua_cocos2dx_spine_SkeletonAnimation_findSlot(lua_State* tolua_S)
             height = mesh->height;
         } else {
             delete[] _worldVertices;
+#if COCOS2D_DEBUG >= 1
             goto tolua_lerror;
+#endif
         }
 
         // return a table
