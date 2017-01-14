@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "cocostudio/DictionaryHelper.h"
 #include "cocostudio/CocosStudioExport.h"
 
-#include "json/document.h"
+#include "json/document-wrapper.h"
 #include "DictionaryHelper.h"
 
 #include <string>

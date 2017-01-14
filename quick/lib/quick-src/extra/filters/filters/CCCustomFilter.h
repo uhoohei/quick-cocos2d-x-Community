@@ -3,7 +3,7 @@
 #define __CCCUSTOM_FILTER__
 
 #include "json/rapidjson.h"
-#include "json/document.h"
+#include "json/document-wrapper.h"
 #include "CCFilter.h"
 
 NS_CC_EXT_BEGIN
