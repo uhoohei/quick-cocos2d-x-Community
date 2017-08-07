@@ -211,8 +211,8 @@ static bool configureCURL(CURL *handle, char *errorBuffer)
         curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
         curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
     } else {
-        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 1L);
-        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 2L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0L);
+        curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0L);
         curl_easy_setopt(handle, CURLOPT_CAINFO, s_sslCaFilename.c_str());
     }
     

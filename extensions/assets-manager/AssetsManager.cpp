@@ -160,6 +160,7 @@ bool AssetsManager::checkUpdate()
     CURLcode res;
     curl_easy_setopt((CURL *)_curl, CURLOPT_URL, _versionFileUrl.c_str());
     curl_easy_setopt((CURL *)_curl, CURLOPT_SSL_VERIFYPEER, 0L);
+    curl_easy_setopt((CURL *)_curl, CURLOPT_SSL_VERIFYHOST, 0L);
     curl_easy_setopt((CURL *)_curl, CURLOPT_WRITEFUNCTION, getVersionCode);
     curl_easy_setopt((CURL *)_curl, CURLOPT_WRITEDATA, &_version);
     if (_connectionTimeout) curl_easy_setopt((CURL *)_curl, CURLOPT_CONNECTTIMEOUT, _connectionTimeout);
