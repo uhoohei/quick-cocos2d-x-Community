@@ -658,6 +658,24 @@ void AssetsManager::createStoragePath()
 #endif
 }
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+#include <ftw.h>
+#endif
+namespace
+{
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+    int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf)
+    {
+        int rv = remove(fpath);
+
+        if (rv)
+            perror(fpath);
+
+        return rv;
+    }
+#endif
+}
+
 void AssetsManager::destroyStoragePath()
 {
     // Delete recorded version codes.
@@ -669,6 +687,11 @@ void AssetsManager::destroyStoragePath()
     // Path may include space.
     command += "\"" + _storagePath + "\"";
     system(command.c_str());
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    if (nftw(_storagePath.c_str(),unlink_cb, 64, FTW_DEPTH | FTW_PHYS))
+        return ;
+    else
+        return ;
 #else
     string command = "rm -r ";
     // Path may include space.
