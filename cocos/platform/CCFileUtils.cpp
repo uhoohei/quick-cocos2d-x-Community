@@ -55,9 +55,7 @@ THE SOFTWARE.
 #include <errno.h>
 #include <dirent.h>
 #endif
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
-#include <ftw.h>
-#endif
+
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
 NS_CC_BEGIN
@@ -1171,7 +1169,6 @@ namespace
 #endif
 }
 
-#include <ftw.h>
 bool FileUtils::removeDirectory(const std::string& path)
 {
 #if !defined(CC_TARGET_OS_TVOS)
