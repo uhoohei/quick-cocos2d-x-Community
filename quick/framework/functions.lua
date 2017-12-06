@@ -533,6 +533,12 @@ function handler(obj, method)
     assert(obj)
     assert(method)
     return function(...)
+        if string.sub(tolua.type(obj), 1, 3) == "cc." then
+            if tolua.isnull(obj) then
+                print("handler with null c++ object")
+                return
+            end
+        end
         return method(obj, ...)
     end
 end
