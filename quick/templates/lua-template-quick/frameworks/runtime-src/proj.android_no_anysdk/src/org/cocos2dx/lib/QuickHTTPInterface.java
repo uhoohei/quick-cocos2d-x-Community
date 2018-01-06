@@ -4,14 +4,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -27,7 +24,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
@@ -36,7 +32,7 @@ public class QuickHTTPInterface {
     static String BOUNDARY = "----------------------------78631b43218d";
     static String NEWLINE = "\r\n";
 
-    static HttpURLConnection createURLConnect(String strURL) {
+    static HttpURLConnection createURLConnect(String strURL) { 
         URL url;
         HttpURLConnection urlConnection;
         try {
@@ -66,7 +62,7 @@ public class QuickHTTPInterface {
                 http.setDoOutput(true);
             }
             http.setRequestMethod(strMedthod);
-        } catch (ProtocolException e) {
+        } catch (Exception e) {
             Log.e("QuickHTTPInterface", e.toString());
         }
     }
@@ -88,8 +84,8 @@ public class QuickHTTPInterface {
 
         try {
             http.connect();
-        } catch (IOException e) {
-            Log.e("QuickHTTPInterface", e.toString());
+        } catch (Throwable tr) {
+            Log.e("QuickHTTPInterface", tr.toString());
             nSuc = 1;
         }
 
@@ -110,7 +106,7 @@ public class QuickHTTPInterface {
             }
             out.write(content.getBytes());
             out.flush();
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e("QuickHTTPInterface", e.toString());
         }
     }
@@ -118,11 +114,9 @@ public class QuickHTTPInterface {
     static void postContentByteArray(HttpURLConnection http, byte[] byteArray) {
         try {
             OutputStream out = http.getOutputStream();
-
             out.write(byteArray);
-
             out.flush();
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e("QuickHTTPInterface", e.toString());
         }
     }
@@ -130,11 +124,9 @@ public class QuickHTTPInterface {
     static void postFormContent(HttpURLConnection http, String key, String val) {
         try {
             OutputStream out = http.getOutputStream();
-
             out.write(getBoundaryContentHeader(key, val).getBytes());
-
             out.flush();
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e("QuickHTTPInterface", e.toString());
         }
     }
@@ -143,8 +135,6 @@ public class QuickHTTPInterface {
         try {
             FileInputStream fin = new FileInputStream(filePath);
             OutputStream out = http.getOutputStream();
-
-
             out.write(getBoundaryFileHeader(name, filePath).getBytes());
             byte[] buffer = new byte[1024];
             int len = 0;
@@ -155,7 +145,7 @@ public class QuickHTTPInterface {
 
             out.flush();
             fin.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e("QuickHTTPInterface", e.toString());
         }
     }
@@ -173,7 +163,7 @@ public class QuickHTTPInterface {
                 out.flush();
             }
             out.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e("QuickHTTPInterface", e.toString());
         }
     }
@@ -229,8 +219,8 @@ public class QuickHTTPInterface {
         int code = 0;
         try {
             code = http.getResponseCode();
-            //            Log.i("QuickHTTPInterface", "reponed code:" + code);
-        } catch (IOException e) {
+            //Log.i("QuickHTTPInterface", "reponed code:" + code);
+        } catch (Exception e) {
             Log.e("QuickHTTPInterface", e.toString());
         }
         return code;
@@ -240,7 +230,7 @@ public class QuickHTTPInterface {
         String msg;
         try {
             msg = http.getResponseMessage();
-        } catch (IOException e) {
+        } catch (Exception e) {
             msg = e.toString();
             Log.e("QuickHTTPInterface", msg);
         }
@@ -249,10 +239,13 @@ public class QuickHTTPInterface {
     }
 
     static String getResponedHeader(HttpURLConnection http) {
-        Map<String, List<String>> headers = http.getHeaderFields();
-
         JSONObject json = new JSONObject();
+        
         try {
+            Map<String, List<String>> headers = http.getHeaderFields();
+            if (headers == null || headers.isEmpty()){
+                return json.toString();
+            }
             for (Entry<String, List<String>> entry: headers.entrySet()) {
                 String key = entry.getKey();
                 if (null == key) {
@@ -265,16 +258,16 @@ public class QuickHTTPInterface {
                 }
                 json.put(key, jsonArray);
             }
-        } catch(JSONException e) {
+        } catch(Exception e) {
             Log.e("QuickHTTPInterface", e.toString());
         }
-
+        
         return json.toString();
     }
 
     static String getResponedHeaderByIdx(HttpURLConnection http, int idx) {
         Map<String, List<String>> headers = http.getHeaderFields();
-        if (null == headers) {
+        if (null == headers || headers.isEmpty()) {
             return null;
         }
 
@@ -303,7 +296,7 @@ public class QuickHTTPInterface {
         }
 
         Map<String, List<String>> headers = http.getHeaderFields();
-        if (null == headers) {
+        if (null == headers || headers.isEmpty()) {
             return null;
         }
 
@@ -325,12 +318,16 @@ public class QuickHTTPInterface {
     }
 
     static int getResponedHeaderByKeyInt(HttpURLConnection http, String key) {
-        String value = http.getHeaderField(key);
-
-        if (null == value) {
+       try{
+            String value = http.getHeaderField(key);
+            if (null == value) {
+                return 0;
+            } else {
+                return Integer.parseInt(value);
+           }
+        } catch(Exception e) {
+            Log.e("QuickHTTPInterface", e.toString());
             return 0;
-        } else {
-            return Integer.parseInt(value);
         }
     }
 
@@ -356,7 +353,7 @@ public class QuickHTTPInterface {
                 System.arraycopy(buffer, 0, retBuf, 1, len);
             }
             return retBuf;
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e("QuickHTTPInterface", e.toString());
         }
 
@@ -366,8 +363,8 @@ public class QuickHTTPInterface {
     static void close(HttpURLConnection http) {
         try {
             http.getInputStream().close();
-        } catch (IOException e) {
-            Log.e("QuickHTTPInterface", e.toString());
+        } catch (Throwable tr) {
+            Log.e("QuickHTTPInterface", tr.toString());
         }
     }
 
@@ -391,7 +388,11 @@ public class QuickHTTPInterface {
     }
 
     public static String combinCookies(List<String> list, String strDomain) {
-        StringBuilder sbCookies = new StringBuilder();
+        StringBuilder sbCookies = new StringBuilder("");
+        
+        if (list == null || list.isEmpty()){
+            return "";
+        }
 
         String strKey = null;
         String strValue = null;
@@ -455,8 +456,8 @@ public class QuickHTTPInterface {
         try {
             c.setTime(new SimpleDateFormat("EEE, dd-MMM-yyyy hh:mm:ss zzz", Locale.US).parse(strTime));
             millisSecond = c.getTimeInMillis()/1000;
-        } catch (ParseException e) {
-        	millisSecond = -1;
+        } catch (Exception e) {
+            millisSecond = -1;
             //Log.e("QuickHTTPInterface", e.toString());
         }
         
