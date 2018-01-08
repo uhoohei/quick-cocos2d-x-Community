@@ -4,6 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := extra_filters_static
 LOCAL_MODULE_FILENAME := libextrafilters
+LOCAL_ARM_MODE := arm
 
 ifeq ($(CC_USE_EXTRA_FILTERS),1)
 

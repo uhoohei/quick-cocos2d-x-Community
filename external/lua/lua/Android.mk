@@ -4,6 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := lua515_static
 LOCAL_MODULE_FILENAME := liblua515
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := \
     lapi.c \

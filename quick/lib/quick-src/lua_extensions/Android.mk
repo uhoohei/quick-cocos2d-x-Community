@@ -4,6 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := lua_extensions_static
 LOCAL_MODULE_FILENAME := libluaextensions
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := $(LOCAL_PATH)/lua_extensions_more.c \
                     $(LOCAL_PATH)/zlib/lua_zlib.c \

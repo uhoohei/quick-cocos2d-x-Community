@@ -5,6 +5,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := cocos2dlua_shared
 
 LOCAL_MODULE_FILENAME := libcocos2dlua
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := hellolua/main.cpp \
 ../../Classes/VisibleRect.cpp \

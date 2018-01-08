@@ -4,6 +4,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE    := cocos_extension_static
 
 LOCAL_MODULE_FILENAME := libextension
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := \
 GUI/CCControlExtension/CCControl.cpp \

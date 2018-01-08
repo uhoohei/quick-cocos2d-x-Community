@@ -4,6 +4,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := cocos_network_static
 
 LOCAL_MODULE_FILENAME := libnetwork
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := \
 SocketIO.cpp \

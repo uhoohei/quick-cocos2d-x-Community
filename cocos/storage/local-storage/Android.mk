@@ -4,6 +4,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := cocos_localstorage_static
 
 LOCAL_MODULE_FILENAME := liblocalstorage
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := LocalStorage.cpp \
 LocalStorage-android.cpp 

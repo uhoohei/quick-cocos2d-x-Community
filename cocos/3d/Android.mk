@@ -4,6 +4,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := cocos3d_static
 
 LOCAL_MODULE_FILENAME := libcocos3d
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES :=
 ifeq ($(CC_USE_3D),1)

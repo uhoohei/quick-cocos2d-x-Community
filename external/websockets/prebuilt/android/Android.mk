@@ -3,6 +3,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_MODULE    := websockets_static
 LOCAL_MODULE_FILENAME := libwebsockets_static
+LOCAL_ARM_MODE := arm
 LOCAL_SRC_FILES := $(TARGET_ARCH_ABI)/libwebsockets.a
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../include/android
 ifeq ($(CC_USE_CURL),0)

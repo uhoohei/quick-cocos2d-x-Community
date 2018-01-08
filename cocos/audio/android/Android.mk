@@ -4,6 +4,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := cocosdenshion_static
 
 LOCAL_MODULE_FILENAME := libcocosdenshion
+LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := cddSimpleAudioEngine.cpp \
                    ccdandroidUtils.cpp \
